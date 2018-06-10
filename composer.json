@@ -3,7 +3,10 @@
     "autoload": {
         "psr-4": {
             "KBS\\": "app"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "description": "kbs",
     "authors": [
@@ -14,6 +17,8 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^2.4",
-        "league/route": "^3.0"
+        "league/route": "^3.0",
+        "zendframework/zend-diactoros": "^1.7",
+        "twig/twig": "^2.4"
     }
 }
