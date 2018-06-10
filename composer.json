@@ -1,0 +1,11 @@
+{
+    "name": "coen/kbs1",
+    "description": "kbs",
+    "authors": [
+        {
+            "name": "Coen Nijenhuis",
+            "email": "nijenhuiscoen@gmail.com"
+        }
+    ],
+    "require": {}
+}
