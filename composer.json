@@ -1,5 +1,10 @@
 {
     "name": "coen/kbs1",
+    "autoload": {
+        "psr-4": {
+            "KBS\\": "app"
+        }
+    },
     "description": "kbs",
     "authors": [
         {
