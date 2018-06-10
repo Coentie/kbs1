@@ -6,6 +6,7 @@
  * Starting the session.
  * Requiring in the autoloader from Composer.
  * Load the env variables through vlucas/phpdontenv.
+ * Load in the application container through thephpleague/container.
  */
 session_start();
 
@@ -17,5 +18,5 @@ try {
     // Do nothing
 }
 
-var_dump(getenv('APP_NAME'));
+require_once __DIR__ . '/container.php';
 
