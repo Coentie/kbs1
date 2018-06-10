@@ -47,3 +47,18 @@ if(! function_exists('resource_path')) {
         return base_path('/resources/') . $extension;
     }
 }
+
+if(! function_exists('config_path')) {
+
+    /**
+     * Returns string representation of the config path.
+     *
+     * @param string $extension
+     *
+     * @return string
+     */
+    function config_path($extension = '') :string
+    {
+        return base_path('/config/') . $extension;
+    }
+}
