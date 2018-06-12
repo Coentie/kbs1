@@ -8,3 +8,4 @@ $container->delegate(
 
 $container->addServiceProvider(new \KBS\Providers\AppServiceProvider());
 $container->addServiceProvider(new \KBS\Providers\ViewServiceProvider());
+$container->addServiceProvider(new \KBS\Providers\ConfigServiceProvider());

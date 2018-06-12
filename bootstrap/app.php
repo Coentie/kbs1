@@ -21,12 +21,6 @@ catch (\Dotenv\Exception\InvalidPathException $e)
     // Do nothing
 }
 
-$loader = new \KBS\Config\Loader\ArrayLoader([
-                                                 'app'   => config_path('app.php'),
-                                                 'cache' => config_path('cache.php')
-                                             ]);
-
-
 require_once base_path('bootstrap/container.php');
 
 $route = $container->get(\League\Route\RouteCollection::class);

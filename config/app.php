@@ -3,5 +3,7 @@
  * Application configurables.
  */
 return [
-    'app' => getenv('APP_NAME'),
+    'name' => [
+        'short' => getenv('APP_NAME'),
+    ]
 ];
