@@ -27,7 +27,8 @@ class ConfigServiceProvider extends AbstractServiceProvider
         $this->getContainer()->share('config', function() {
             $loader = new \KBS\Config\Loader\ArrayLoader([
                                                              'app'   => config_path('app.php'),
-                                                             'cache' => config_path('cache.php')
+                                                             'cache' => config_path('cache.php'),
+                                                             'db' => config_path('database.php')
                                                          ]);
 
             return (new \KBS\Config\Config())->from([$loader]);
