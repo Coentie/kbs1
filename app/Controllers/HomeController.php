@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class HomeController extends BaseController
 {
+
     /**
      * Returns the index method of the home view.
      *
@@ -17,6 +18,10 @@ class HomeController extends BaseController
      */
     public function index(RequestInterface $request, ResponseInterface $response)
     {
-        return $this->view->render($response, 'home.twig');
+        return $this->view->render($response, 'home.twig', [
+            'user' => [
+                'id' => 1,
+            ]
+        ]);
     }
 }

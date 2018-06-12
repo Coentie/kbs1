@@ -62,3 +62,28 @@ if(! function_exists('config_path')) {
         return base_path('/config/') . $extension;
     }
 }
+
+if(! function_exists('env')) {
+
+    /**
+     * @param        $key
+     * @param string $default
+     *
+     * @return array|bool|false|string
+     */
+    function env($key, $default = '')
+    {
+        $value = getenv($key);
+
+        if($value === false) {
+            return $default;
+        }
+
+        if($value === 'true' || $value === 'false')
+        {
+            return (bool) $value;
+        }
+
+        return $value;
+    }
+}

@@ -22,16 +22,23 @@ class View
     }
 
     /**
-     * Renders the view.
+     * Renders the response.
      *
-     * @param $response
+     * @param       $response
+     * @param       $view
+     * @param array $data
      *
      * @return mixed
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function render($response)
+    public function render($response, $view, array $data = [])
     {
-        $response->getBody()->write('Home');
+       $response->getBody()->write(
+           $this->twig->render($view, $data)
+       );
 
-        return $response;
+       return $response;
     }
 }
