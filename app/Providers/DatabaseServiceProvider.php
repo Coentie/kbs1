@@ -29,11 +29,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 
         $container->share('database', function () use ($config) {
 
-            return new \PDO($config->get('db.driver') .
-                            ':host' .
-                            $config->get('db.host') .
-                            ';dbname=' .
-                            $config->get('db.database_name'),
+            return new \PDO($config->get('db.driver') . ':host=' . $config->get('db.host') . ';dbname=' . $config->get('db.database_name'),
                             $config->get('db.user'),
                             $config->get('db.password'));
 
