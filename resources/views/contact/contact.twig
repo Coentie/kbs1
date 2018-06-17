@@ -1,0 +1,51 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+
+    <div class="flex flex-row">
+
+        <div class="w-1/6 flex flex-col items-center">
+            <div class="p-4">
+                <a href="/" class="no-underline text-grey-dark hover:text-red-dark">Home</a>
+            </div>
+            <div class="p-4">
+                <a href="#" class="no-underline text-red-dark">Contact</a>
+            </div>
+            <div class="p-4">
+                <a href="/" class="no-underline text-grey-dark hover:text-red-dark">Werkervaring</a>
+            </div>
+            <div class="p-4">
+                <a href="/" class="no-underline text-grey-dark hover:text-red-dark">Hobbies</a>
+            </div>
+        </div>
+
+        <div class="flex-1 flex items-center flex-col">
+                <h3 class="text-grey-dark mb-3">Mijn kaartje</h3>
+
+                <div class="max-w-sm rounded overflow-hidden shadow-lg max-w-s animated bounce">
+                    <img class="w-full" src="/img/8.jpg" alt="Sunset in the mountains">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2 text-red-dark">Coen Nijenhuis</div>
+                        <div class="flex">
+                            <div class="flex flex-col w-1/3">
+                                <p>Straat: </p>
+                                <p>Postcode: </p>
+                                <p>Woonplaats: </p>
+                                <p>Telefoon: </p>
+                                <p>Email: </p>
+                            </div>
+                            <div class="flex flex-col flex-1">
+                                <p>{{ contact.straat }} - {{ contact.huis_nummer }} </p>
+                                <p>{{ contact.postcode }} </p>
+                                <p>{{ contact.stad }} </p>
+                                <p>{{ contact.telefoon }} </p>
+                                <p>{{ contact.email }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+{% endblock %}

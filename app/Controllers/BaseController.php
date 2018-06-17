@@ -16,18 +16,12 @@ class BaseController
     protected $view;
 
     /**
-     * @var \KBS\Query\Builder
-     */
-    protected $builder;
-
-    /**
      * BaseController constructor.
      *
      * @param \KBS\View\View $view
      */
-    public function __construct(View $view, Builder $builder)
+    public function __construct(View $view)
     {
         $this->view = $view;
-        $this->builder = $builder;
     }
 }
