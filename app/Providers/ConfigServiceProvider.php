@@ -3,8 +3,6 @@
 
 namespace KBS\Providers;
 
-
-use KBS\Config\Config;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class ConfigServiceProvider extends AbstractServiceProvider

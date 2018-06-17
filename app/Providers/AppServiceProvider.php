@@ -23,10 +23,8 @@ class AppServiceProvider extends AbstractServiceProvider
 
     /**
      * Registers the router, response, request and the emitter.
-     *
-     * @return void
      */
-    public function register() :void
+    public function register()
     {
         $container = $this->getContainer();
 

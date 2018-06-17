@@ -3,7 +3,8 @@
 /*
  * Path helpers
  */
-if(! function_exists('base_path')) {
+if ( ! function_exists('base_path'))
+{
 
     /**
      * Returns string representation of the base path.
@@ -12,13 +13,14 @@ if(! function_exists('base_path')) {
      *
      * @return string
      */
-    function base_path($extension = '') :string
+    function base_path($extension = ''): string
     {
-        return  __DIR__ . '/../' . $extension;
+        return __DIR__ . '/../' . $extension;
     }
 }
 
-if (! function_exists('route_path')) {
+if ( ! function_exists('route_path'))
+{
 
     /**
      * Returns string representation of the route path.
@@ -27,13 +29,14 @@ if (! function_exists('route_path')) {
      *
      * @return string
      */
-    function route_path($extension = '') :string
+    function route_path($extension = ''): string
     {
         return base_path('/routes/') . $extension;
     }
 }
 
-if(! function_exists('resource_path')) {
+if ( ! function_exists('resource_path'))
+{
 
     /**
      * Returns string representation of the resource path.
@@ -42,13 +45,14 @@ if(! function_exists('resource_path')) {
      *
      * @return string
      */
-    function resource_path($extension = '') :string
+    function resource_path($extension = ''): string
     {
         return base_path('/resources/') . $extension;
     }
 }
 
-if(! function_exists('config_path')) {
+if ( ! function_exists('config_path'))
+{
 
     /**
      * Returns string representation of the config path.
@@ -57,13 +61,14 @@ if(! function_exists('config_path')) {
      *
      * @return string
      */
-    function config_path($extension = '') :string
+    function config_path($extension = ''): string
     {
         return base_path('/config/') . $extension;
     }
 }
 
-if(! function_exists('env')) {
+if ( ! function_exists('env'))
+{
 
     /**
      * @param        $key
@@ -75,15 +80,54 @@ if(! function_exists('env')) {
     {
         $value = getenv($key);
 
-        if($value === false) {
+        if ($value === false)
+        {
             return $default;
         }
 
-        if($value === 'true' || $value === 'false')
+        if ($value === 'true' || $value === 'false')
         {
-            return (bool) $value;
+            return (bool)$value;
         }
 
         return $value;
+    }
+}
+
+if ( ! function_exists('config'))
+{
+
+    /**
+     * Extracts paramaters from config.
+     *
+     * @param        $key
+     * @param string $default
+     *
+     * @return array|bool|false|string
+     */
+    function config($key, $default = '')
+    {
+        $config = (new \KBS\Config\Config())
+            ->from(getConfigLoader($key));
+
+        return $config->get($key, $default);
+    }
+
+    /**
+     * Sets up the config loader.
+     *
+     * @param $key
+     *
+     * @return array
+     */
+    function getConfigLoader($key)
+    {
+        $filename = explode('.', $key)[0];
+
+        return [
+            new \KBS\Config\Loader\ArrayLoader([
+                                                   $filename=> config_path($filename . '.php'),
+                                               ])
+        ];
     }
 }

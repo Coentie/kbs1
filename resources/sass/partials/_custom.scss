@@ -1,0 +1,27 @@
+body {
+    font-family: 'PT sans', sans-serif;
+}
+
+.brand {
+    @apply .text-2xl .no-underline .text-red-dark .py-2 .px-6 .border-red-dark .border-2 .rounded-full;
+
+    background-color: transparent;
+    transition: ease-in-out 0.25s;
+
+    &:hover {
+        @apply .text-white .bg-red-dark;
+    }
+}
+
+
+.hover-bounce:hover {
+    @apply .animated .pulse;
+}
+
+.card-width {
+    width: 200px;
+}
+
+.primary-gradient {
+    background: linear-gradient(to bottom right, #7a221b, #63201d);
+}

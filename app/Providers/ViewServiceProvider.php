@@ -25,7 +25,7 @@ class ViewServiceProvider extends AbstractServiceProvider
      *
      * @return void
      */
-    public function register() :void
+    public function register()
     {
         $container = $this->getContainer();
 
@@ -36,7 +36,6 @@ class ViewServiceProvider extends AbstractServiceProvider
             $loader = new Twig_Loader_Filesystem(resource_path('views'));
 
             $twig = new Twig_Environment($loader, [
-                'cache' => $config->get('cache.views.path', false),
                 'debug' => $config->get('app.debug', false),
             ]);
 

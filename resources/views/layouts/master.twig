@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+    <title>KBS</title>
+
+    <link href="/css/app.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="my-2 h-16 flex items-center justify-center mb-8">
+        <div class="flex-1 ml-8 animated slideInLeft">
+            <p class="text-2xl text-red-dark uppercase">curriculum vitae</p>
+        </div>
+
+        <div class="mr-8 animated slideInRight">
+            <p class="text-grey ">Coen Nijenhuis</p>
+        </div>
+    </nav>
+
+    <div class="w-3/4 m-auto py-8 flex items-center justify-center flex-col animated slideInDown">
+        <p class="text-grey text-4xl mb-8">Coder, Back-end specialist & Entrepeneur</p>
+
+        <img class="mb-8" src="/img/42.png">
+
+        <p class="text-sm text-grey"><i>“May I never be complete. May I never be content. May I never be
+                                        perfect.”</i> -
+            <span class="text-red-dark">Tyler
+                                                          Durden<span
+        </p>
+    </div>
+
+    <div class="w-3/4 m-auto py-8 flex items-center flex-col animated slideInUp">
+
+        <h3 class="text-grey py-4">Leer meer over mij!</h3>
+
+        <div class="flex justify-between">
+            <div class="mr-4 card-width cursor-pointer hover-bounce" onclick="redirect('/adres')">
+                <div class="flex items-center justify-center shadow-md rounded primary-gradient">
+                    <div class="flex flex-col p-4 items-center  text-white">
+                        <h3 class="mb-4 font-hairline">Adres gegevens</h3>
+                        <i class="text-white fas fa-address-card fa-4x flex-1"></i>
+                    </div>
+
+                </div>
+            </div>
+            <div class="mr-4 card-width cursor-pointer hover-bounce">
+                <div class="flex items-center justify-center primary-gradient shadow-md rounded">
+                    <div class="flex flex-col p-4 items-center text-white">
+                        <h3 class="mb-4 font-hairline">Werk ervaring</h3>
+                        <i class="fas fa-briefcase fa-4x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="mr-4 card-width cursor-pointer hover-bounce">
+                <div class="flex items-center justify-center primary-gradient shadow-md rounded">
+                    <div class="flex flex-col p-4 items-center text-white">
+                        <h3 class="mb-4">Hobbies</h3>
+                        <i class="far fa-clock fa-4x flex-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        /**
+         * Redirects the user the
+         *
+         * @param url
+         */
+        function redirect(url)
+        {
+            window.location.href = url;
+        }
+
+    </script>
+</body>

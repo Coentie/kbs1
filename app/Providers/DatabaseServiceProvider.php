@@ -4,6 +4,8 @@
 namespace KBS\Providers;
 
 
+use KBS\Query\Builder;
+use KBS\Query\Connection;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class DatabaseServiceProvider extends AbstractServiceProvider
@@ -15,7 +17,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'database'
+        \PDO::class,
     ];
 
     /**
@@ -27,12 +29,11 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 
         $config = $container->get('config');
 
-        $container->share('database', function () use ($config) {
+        $container->share(\PDO::class, function () use ($config) {
 
             return new \PDO($config->get('db.driver') . ':host=' . $config->get('db.host') . ';dbname=' . $config->get('db.database_name'),
                             $config->get('db.user'),
                             $config->get('db.password'));
-
         });
     }
 }
