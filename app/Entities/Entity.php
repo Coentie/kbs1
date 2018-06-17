@@ -6,7 +6,6 @@ use KBS\Query\Builder;
 
 class Entity
 {
-
     /**
      * Table of the entity.
      *
@@ -38,6 +37,22 @@ class Entity
     {
         $this->builder = (new Builder($this))
             ->select($selected);
+
+        return $this;
+    }
+
+    /**
+     * Where statement for the query.
+     *
+     * @param $column
+     * @param $operator
+     * @param $value
+     *
+     * @return $this
+     */
+    public function where($column, $operator, $value)
+    {
+        $this->builder = $this->builder->where($column, $operator, $value);
 
         return $this;
     }
@@ -84,7 +99,7 @@ class Entity
     protected function fetchQuery()
     {
         return $this->executeQuery()
-                 ->fetchAll(\PDO::FETCH_ASSOC);
+                    ->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -108,4 +123,7 @@ class Entity
             $this->$attribute = $value;
         }
     }
+
+
+
 }

@@ -94,6 +94,21 @@ if ( ! function_exists('env'))
     }
 }
 
+if( ! function_exists('session')) {
+
+    /**
+     * Stores a value to the session.
+     *
+     * @param $key
+     * @param $value
+     */
+    function session($key, $value)
+    {
+        $_SESSION[$key] = $value;
+    }
+
+}
+
 if ( ! function_exists('config'))
 {
 

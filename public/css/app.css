@@ -8090,8 +8090,10 @@ button,
           animation-name: slideOutUp;
 }
 
+html,
 body {
   font-family: 'PT sans', sans-serif;
+  min-height: 100vh;
 }
 
 .brand {

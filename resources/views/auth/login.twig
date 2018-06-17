@@ -1,0 +1,45 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+
+    <div class="flex flex-row">
+
+        {% include 'layouts/partials/side-navigation.twig' %}
+
+        <div class="flex flex-1 justify-center items-center">
+            <form class="w-full max-w-xs" method="POST" action="/login">
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-grey md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+                            Inlog
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               id="inline-full-name" type="text" value="Jane Doe" name="username">
+                    </div>
+                </div>
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-grey md:text-right mb-1 md:mb-0 pr-4" for="inline-username">
+                            Wachtwoord
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               id="inline-username" type="password" placeholder="******************" name="password">
+                    </div>
+                </div>
+                <div class="md:flex md:items-center">
+                    <div class="md:w-1/3"></div>
+                    <div class="md:w-2/3">
+                        <button class="shadow bg-red-dark hover:bg-red-light text-white font-bold py-2 px-4 rounded"
+                                type="submit">
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
-<body>
-    <nav class="my-2 h-16 flex items-center justify-center mb-8">
-        <div class="flex-1 ml-8 animated slideInLeft">
-            <p class="text-2xl text-red-dark uppercase">curriculum vitae</p>
-        </div>
+<body class="flex flex-col">
+        <nav class="my-2 h-16 flex items-center justify-center mb-8">
+            <div class="flex-1 ml-8 animated slideInLeft">
+                <p class="text-2xl text-red-dark uppercase">curriculum vitae</p>
+            </div>
 
-        <div class="mr-8 animated slideInRight">
-            <p class="text-grey ">Coen Nijenhuis</p>
-        </div>
-    </nav>
+            <div class="mr-8 animated slideInRight">
+                <p class="text-grey ">Coen Nijenhuis</p>
+            </div>
+        </nav>
 
-    {% block content %}{% endblock %}
-
+    <div class="flex-1">
+        {% block content %}{% endblock %}
+    </div>
     <script>
 
         /**
@@ -27,8 +28,7 @@
          *
          * @param url
          */
-        function redirect(url)
-        {
+        function redirect(url) {
             window.location.href = url;
         }
 
