@@ -67,6 +67,16 @@ class Entity
     }
 
     /**
+     * Gets the first row in the table.
+     */
+    public function first()
+    {
+        $this->builder = $this->builder->limit(1);
+
+        return $this->get();
+    }
+
+    /**
      * Fetches an associative array based on query.
      *
      * @return array

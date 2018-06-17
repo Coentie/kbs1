@@ -27,7 +27,7 @@ class ContactController extends BaseController
     {
         $contact = (new Contact())
                         ->select(['*'])
-                        ->get();
+                        ->first();
 
         return $this->view->render($response, 'contact/contact.twig', [
             'contact' => $contact

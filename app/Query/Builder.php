@@ -21,12 +21,22 @@ class Builder
     /**
      * @var string
      */
+    protected $select;
+
+    /**
+     * @var string
+     */
     protected $query;
 
     /**
      * @var array
      */
     protected $bindings = [];
+
+    /**
+     * @var int
+     */
+    protected $limit;
 
     /**
      * @var \PDOStatement
@@ -73,7 +83,21 @@ class Builder
      */
     public function select(array $selected)
     {
-        $this->query = 'SELECT ' . $this->arrayToSql($selected) . ' FROM ' . $this->table;
+        $this->select = 'SELECT ' . $this->arrayToSql($selected) . ' FROM ' . $this->table;
+
+        return $this;
+    }
+
+    /**
+     * Limits the search result of the query.
+     *
+     * @param int $amount
+     *
+     * @return $this
+     */
+    public function limit($amount = 1)
+    {
+        $this->limit = ' LIMIT ' . $amount;
 
         return $this;
     }
@@ -83,7 +107,20 @@ class Builder
      */
     public function get()
     {
-        return $this->prepareQuery();
+        return $this->generateQuery()
+                    ->prepareQuery();
+    }
+
+    /**
+     * Generates the query in the right order.
+     *
+     * @return $this
+     */
+    public function generateQuery()
+    {
+        $this->query = $this->select . $this->limit;
+
+        returN $this;
     }
 
     /**
@@ -93,7 +130,10 @@ class Builder
      */
     protected function prepareQuery()
     {
-        if($this->preparedQuery) return $this->preparedQuery;
+        if ($this->preparedQuery)
+        {
+            return $this->preparedQuery;
+        }
 
         $this->preparedQuery = $this->connection
             ->prepare($this->query);
