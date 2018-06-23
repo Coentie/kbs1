@@ -3,9 +3,9 @@
 
 namespace KBS\Controllers\Auth\Login;
 
-
-use KBS\Entities\User;
 use KBS\Hash\Hash;
+use KBS\Entities\User;
+use KBS\Session\SessionManager;
 
 trait canLogin
 {
@@ -29,11 +29,10 @@ trait canLogin
     public function signin($request)
     {
         $this->setUser($request)
-             ->userFound() ?: $this->passwordMatch($request);
+             ->userFound() ? $this->passwordMatch($request) : null;
 
-        if($this->loggedIn) {
-            $this->saveToSession();
-        }
+        $this->loggedIn ?
+            $this->saveToSession() : null;
 
         return $this->loggedIn;
     }
@@ -47,7 +46,7 @@ trait canLogin
      */
     private function setUser($request)
     {
-        $this->user = (new User())->getUserWithName($request->name);
+        $this->user = (new User())->getUserWithName($request->getParsedBody()['username']);
 
         return $this;
     }
@@ -55,7 +54,7 @@ trait canLogin
     /**
      * Checks if the user is found.
      *
-     * @return $this
+     * @return bool
      */
     private function userFound()
     {
@@ -64,7 +63,7 @@ trait canLogin
             $this->loginFailed();
         }
 
-        return $this;
+        return $this->loggedIn;
     }
 
     /**
@@ -77,6 +76,8 @@ trait canLogin
 
     protected function passwordMatch($request)
     {
+        if(! $this->user) return;
+
         $hash = new Hash();
 
         if(! $hash->equals($this->user->password, $request->password)) {
@@ -86,7 +87,7 @@ trait canLogin
 
     protected function saveToSession()
     {
-        session('username', $this->user->name);
+        SessionManager::add('username', $this->user->name);
     }
 
 }

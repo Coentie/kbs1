@@ -4,13 +4,13 @@
 namespace KBS\Controllers\Auth;
 
 use KBS\Controllers\BaseController;
-use KBS\Entities\User;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use KBS\Controllers\Auth\Login\canLogin;
 
 class LoginController extends BaseController
 {
-
+    use canLogin;
     /**
      * Index page of the login
      *
@@ -33,9 +33,9 @@ class LoginController extends BaseController
      *
      * @throws \ReflectionException
      */
-    public function signin(RequestInterface $request, ResponseInterface $response)
+    public function login(RequestInterface $request, ResponseInterface $response)
     {
-        if($this->signIn()) {
+        if($this->signIn($request)) {
             return $this->view->render($response, 'admin/dashboard');
         }
 

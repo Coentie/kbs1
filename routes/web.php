@@ -8,4 +8,11 @@ $route->get('/contact', '\KBS\Controllers\ContactController::index')->setName('c
 
 /** Authentication routes */
 $route->get('/login', '\KBS\Controllers\Auth\LoginController::index')->setName('login');
-$route->post('/login', '\KBS\Controllers\Auth\LoginController::signin');
+$route->post('/login', '\KBS\Controllers\Auth\LoginController::login');
+
+$route->get('/test', function() {
+    (new \KBS\Entities\User())->insert([
+                                           'name'     => 'Admin',
+                                           'password' => (new \KBS\Hash\Hash())->hash('secret'),
+                                       ]);
+});

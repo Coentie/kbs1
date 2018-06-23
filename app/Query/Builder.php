@@ -5,6 +5,8 @@ namespace KBS\Query;
 
 use KBS\Entities\Entity;
 
+// ToDo: Remove entity dependency.
+
 class Builder
 {
 
@@ -14,7 +16,7 @@ class Builder
     protected $connection;
 
     /**
-     * @var Entity table.
+     * @var string.
      */
     protected $table;
 
@@ -27,6 +29,11 @@ class Builder
      * @var string
      */
     protected $query;
+
+    /**
+     * @var string
+     */
+    protected $insert;
 
     /**
      * @var array
@@ -52,6 +59,11 @@ class Builder
      * @var bool
      */
     protected $where = false;
+
+    /**
+     * @var string
+     */
+    protected $querySort;
 
     /**
      * Builder constructor.
@@ -87,16 +99,89 @@ class Builder
     }
 
     /**
+     * Sets the sort of query.
+     *
+     * @param $sort
+     */
+    protected function setQuerySort($sort)
+    {
+        $this->querySort = $sort;
+    }
+
+    /**
      * Creates the base for the select query.
      *
      * @param array $selected
      */
     public function select(array $selected)
     {
+        $this->setQuerySort('select');
+
         $this->select = 'SELECT ' . $this->arrayToSql($selected) . ' FROM ' . $this->table;
 
         return $this;
     }
+
+    /**
+     * Creates the base for the insert query.
+     *
+     * @param array $array
+     *
+     * @return $this
+     */
+    public function insert(array $array)
+    {
+        $this->setQuerySort('insert');
+
+        $this->insert = 'INSERT INTO ' .
+            $this->table .
+            '(' .
+            $this->extractColumns($array) .
+            ') VALUES (' .
+            $this->getBindingString($array)
+            . ')';
+
+        return $this;
+    }
+
+    /**
+     * Extracting columns into a query string.
+     *
+     * @param array $array
+     *
+     * @return string
+     */
+    protected function extractColumns(array $array)
+    {
+        return implode(', ', array_keys($array));
+    }
+
+    /**
+     * Extract the bindings from an array.
+     *
+     * @param $array
+     *
+     * @return string
+     */
+    protected function getBindingString($array)
+    {
+        $appendable = '';
+
+        foreach ($array as $col => $binding)
+        {
+            $appendable .= ':' . $col;
+
+            if ($binding !== end($array))
+            {
+                $appendable .= ',';
+            }
+
+            $this->appendBindings($col, $binding);
+        }
+
+        return $appendable;
+    }
+
 
     /**
      * Sets a where statement.
@@ -112,13 +197,13 @@ class Builder
         $this->appendBindings($column, $value);
 
         $this->whereStatement .= $this->getWhere()
-                                    . ' '
-                                    . $column
-                                    . ' '
-                                    . $operator
-                                    . ' '
-                                    . ':'
-                                    . $column;
+            . ' '
+            . $column
+            . ' '
+            . $operator
+            . ' '
+            . ':'
+            . $column;
 
         return $this;
     }
@@ -156,7 +241,8 @@ class Builder
     {
         $value = $this->where ? ' AND' : ' WHERE';
 
-        if(! $this->where) {
+        if ( ! $this->where)
+        {
             $this->whereStatementUsed();
         }
 
@@ -168,7 +254,7 @@ class Builder
      */
     protected function whereStatementUsed()
     {
-        $this->where = !$this->where;
+        $this->where = ! $this->where;
     }
 
     /**
@@ -201,9 +287,17 @@ class Builder
      */
     public function generateQuery()
     {
-        $this->query = $this->select
-            .$this->whereStatement
-            .$this->limit;
+        switch($this->querySort)
+        {
+            case 'select':
+                $this->query = $this->select
+                    . $this->whereStatement
+                    . $this->limit;
+                break;
+            case 'insert':
+                $this->query = $this->insert;
+                break;
+        }
 
         return $this;
     }

@@ -3,7 +3,6 @@
 
 namespace KBS\Entities;
 
-
 class User extends Entity
 {
 

@@ -42,6 +42,22 @@ class Entity
     }
 
     /**
+     * Creates the base fo an insert query.
+     *
+     * @return $this
+     * @throws \ReflectionException
+     */
+    public function insert(array $insertable)
+    {
+        $this->builder = (new Builder($this))
+                ->insert($insertable)
+                ->get()
+                ->execute();
+
+        return $this;
+    }
+
+    /**
      * Where statement for the query.
      *
      * @param $column
