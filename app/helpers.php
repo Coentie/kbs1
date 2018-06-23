@@ -146,3 +146,16 @@ if ( ! function_exists('config'))
         ];
     }
 }
+
+if(! function_exists('signedIn')) {
+
+    /**
+     * Checks if a user is signed in.
+     *
+     * @return bool
+     */
+    function signedIn()
+    {
+        return array_key_exists('username', $_SESSION);
+    }
+}

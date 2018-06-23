@@ -25,8 +25,8 @@ class Hash
      *
      * @return bool
      */
-    public function equals($unhashed, $hashed)
+    public function equals($password, $hash)
     {
-        return $this->hash($unhashed) === $hashed;
+        return password_verify($password, $hash);
     }
 }

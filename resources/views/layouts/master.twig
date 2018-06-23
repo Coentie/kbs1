@@ -21,6 +21,9 @@
     <div class="flex-1">
         {% block content %}{% endblock %}
     </div>
+
+
+
     <script>
 
         /**
@@ -30,6 +33,14 @@
          */
         function redirect(url) {
             window.location.href = url;
+        }
+
+        /**
+         * Submits the logout form
+         */
+        function submitLogoutForm()
+        {
+            document.getElementById('logout-form').submit();
         }
 
     </script>

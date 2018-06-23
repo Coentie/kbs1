@@ -3,9 +3,8 @@
 
 namespace KBS\Controllers;
 
-
-use KBS\Query\Builder;
 use KBS\View\View;
+use KBS\Request\Errors\Error;
 
 class BaseController
 {

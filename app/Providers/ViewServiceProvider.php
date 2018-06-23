@@ -3,6 +3,7 @@
 
 namespace KBS\Providers;
 
+use KBS\Request\Errors\Error;
 use KBS\View\View;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
@@ -42,6 +43,8 @@ class ViewServiceProvider extends AbstractServiceProvider
             if($config->get('app.debug')) {
                 $twig->addExtension(new Twig_Extension_Debug());
             }
+
+            $twig->addGlobal('signedIn', signedIn());
 
             return new View($twig);
         });

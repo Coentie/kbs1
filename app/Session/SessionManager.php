@@ -39,7 +39,7 @@ class SessionManager
         ! self::$_instance ?:
             self::$_instance = new self();
 
-        unset($_SESSION['key']);
+        unset($_SESSION[$key]);
 
         self::$_instance = null;
     }

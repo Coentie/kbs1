@@ -9,6 +9,7 @@ $route->get('/contact', '\KBS\Controllers\ContactController::index')->setName('c
 /** Authentication routes */
 $route->get('/login', '\KBS\Controllers\Auth\LoginController::index')->setName('login');
 $route->post('/login', '\KBS\Controllers\Auth\LoginController::login');
+$route->post('/logout', '\KBS\Controllers\Auth\LoginController::logout');
 
 $route->get('/test', function() {
     (new \KBS\Entities\User())->insert([
