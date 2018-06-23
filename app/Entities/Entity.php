@@ -26,6 +26,13 @@ class Entity
     protected $builder;
 
     /**
+     * Attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [];
+
+    /**
      * Creates the base for a select query.
      *
      * @param array $selected
@@ -74,6 +81,21 @@ class Entity
     }
 
     /**
+     * Orders the query.
+     *
+     * @param        $column
+     * @param string $direction
+     *
+     * @return $this
+     */
+    public function orderBy($column, $direction = 'ASC')
+    {
+        $this->builder = $this->builder->orderBy($column, $direction);
+
+        return $this;
+    }
+
+    /**
      * Gets the table of the entity.
      *
      * @return string
@@ -84,7 +106,9 @@ class Entity
     }
 
     /**
-     * Returns assosiative array of the row
+     * Returns instance or array of instances.
+     *
+     * @return $this|array
      */
     public function get()
     {
@@ -92,6 +116,14 @@ class Entity
 
         if(count($result) == 1) {
             array_walk($result, [$this, 'bindKeysToEntity']);
+        }
+
+        if(count($result) > 1) {
+            foreach($result as $row) {
+                $entityArray[] = $this->newInstanceAndBind($row);
+            }
+
+            return $entityArray;
         }
 
         return $this;
@@ -140,6 +172,22 @@ class Entity
         }
     }
 
+    /**
+     * Extracts to a new instance of a model.
+     *
+     * @param $result
+     *
+     * @return mixed
+     */
+    protected function newInstanceAndBind($result)
+    {
+        $model = new $this;
 
+        foreach($result as $col => $value)
+        {
+            $model->$col = $value;
+        }
 
+        return $model;
+    }
 }

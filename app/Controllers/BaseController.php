@@ -23,4 +23,15 @@ class BaseController
     {
         $this->view = $view;
     }
+
+    /**
+     * Checks if the user is authenticated to use a controller method.
+     */
+    protected function authenticate()
+    {
+        if(! signedIn()) {
+            header('Http/1.0 403 Forbidden');
+            echo 'Sorry, this area is only for admins';
+        }
+    }
 }

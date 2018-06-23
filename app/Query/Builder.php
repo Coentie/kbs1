@@ -66,6 +66,11 @@ class Builder
     protected $querySort;
 
     /**
+     * @var string
+     */
+    protected $orderBy;
+
+    /**
      * Builder constructor.
      *
      * @param \PDO|null            $connection
@@ -209,6 +214,21 @@ class Builder
     }
 
     /**
+     * Orders the query.
+     *
+     * @param        $column
+     * @param string $direction
+     *
+     * @return $this
+     */
+    public function orderBy($column, $direction = 'ASC')
+    {
+        $this->orderBy = ' ORDER BY ' . $column . ' ' . $direction;
+
+        return $this;
+    }
+
+    /**
      * Appends the bindings to the bindings array.
      *
      * @param $column
@@ -287,11 +307,12 @@ class Builder
      */
     public function generateQuery()
     {
-        switch($this->querySort)
+        switch ($this->querySort)
         {
             case 'select':
                 $this->query = $this->select
                     . $this->whereStatement
+                    . $this->orderBy
                     . $this->limit;
                 break;
             case 'insert':

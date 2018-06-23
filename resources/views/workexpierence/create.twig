@@ -1,0 +1,140 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+
+    <div class="flex flex-row">
+
+        {% include 'layouts/partials/side-navigation.twig' %}
+
+        <div class="flex flex-col flex-1">
+
+            <h3 class="text-red-dark mb-8"> Voeg een nieuwe werkervaring toe</h3>
+
+            <form method="POST">
+
+            <div class="flex flex-col mb-8">
+                <div class="md:w-1/6">
+                    <label class="block text-grey mb-1 md:mb-0 pr-4" for="title">
+                        Titel
+                    </label>
+                </div>
+                <div class="md:w-2/3">
+                    <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                           type="text" name="title" id="title">
+                </div>
+
+                {% if(errorTitle) %}
+                    <div class="md:flex mb-6">
+                        <div class="md:m-1/6"></div>
+                        <div class='md:w-2/3 block text-red'>
+                            {{ errorTitle }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="flex flex-col mb-8">
+                <div class="md:w-1/6">
+                    <label class="block text-grey mb-1 md:mb-0 pr-4" for="description">
+                        Beschrijving
+                    </label>
+                </div>
+                <div class="md:w-2/3">
+                    <textarea class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                           type="text" name="description" id="description"></textarea>
+                </div>
+
+                {% if(errorDescription) %}
+                    <div class="md:flex mb-6">
+                        <div class="md:m-1/6"></div>
+                        <div class='md:w-2/3 block text-red'>
+                            {{ errorDescription }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="flex flex-col mb-8">
+                <div class="md:w-1/6">
+                    <label class="block text-grey mb-1 md:mb-0 pr-4" for="employer">
+                        Werkgever
+                    </label>
+                </div>
+                <div class="md:w-2/3">
+                    <select class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                           type="text" name="employer" id="employer">
+
+                        <option value="" selected>Geen</option>
+                        <option value="1">Slagerij Nijenhuis</option>
+                    </select>
+                </div>
+
+                {% if(errorEmployer) %}
+                    <div class="md:flex mb-6">
+                        <div class="md:m-1/6"></div>
+                        <div class='md:w-2/3 block text-red'>
+                            {{ errorEmployer }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="flex flex-col mb-3">
+                <div class="md:w-1/6">
+                    <label class="block text-grey mb-1 md:mb-0 pr-4" for="begin_year">
+                        Jaar in dienst treding
+                    </label>
+                </div>
+                <div class="md:w-2/3">
+                    <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                           type="date" name="begin_year" id="begin_year">
+                </div>
+
+                {% if(errorBegindate) %}
+                    <div class="md:flex mb-4">
+                        <div class="md:m-1/6"></div>
+                        <div class='md:w-2/3 block text-red'>
+                            {{ errorBegindate }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="flex flex-col mb-2">
+                <div class="md:w-1/6">
+                    <label class="block text-grey mb-1 md:mb-0 pr-4" for="end_year">
+                        Jaar uit dienst treding
+                    </label>
+                </div>
+                <div class="md:w-2/3">
+                    <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                           type="date" name="end_year" id="end_year">
+                </div>
+
+                {% if(errorEnddate) %}
+                    <div class="md:flex mb-2">
+                        <div class="md:m-1/6"></div>
+                        <div class='md:w-2/3 block text-red'>
+                            {{ errorEnddate }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="flex flex-col">
+                <div class="md:w-1/6">
+                </div>
+                <div class="md:w-2/3">
+                    <button class="shadow bg-red-dark hover:bg-red-light text-white font-bold py-2 px-4 rounded"
+                            type="submit">
+                        <i class="fa fa-check mr-2"></i> Save
+                    </button>
+                </div>
+            </div>
+
+            </form>
+
+        </div>
+
+    </div>
+{% endblock %}
