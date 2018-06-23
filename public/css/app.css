@@ -8133,6 +8133,22 @@ body {
   background: linear-gradient(to bottom right, #7a221b, #63201d);
 }
 
+.prefixed-height-200 {
+  min-height: 200px;
+}
+
+.prefixed-width-400 {
+  min-width: 400px;
+}
+
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
+.mr-12 {
+  margin-right: 3.5rem;
+}
+
 @media (min-width: 576px) {
   .sm\:list-reset {
     list-style: none;

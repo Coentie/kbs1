@@ -12,6 +12,7 @@ $route->post('/login', '\KBS\Controllers\Auth\LoginController::login');
 $route->post('/logout', '\KBS\Controllers\Auth\LoginController::logout');
 
 /** Workexpierence routes */
+$route->get('/workexpierence', '\KBS\Controllers\WorkExpierenceController::index');
 $route->get('/workexpierence/edit', '\KBS\Controllers\WorkExpierenceController::create');
 $route->post('/workexpierence/edit', '\KBS\Controllers\WorkExpierenceController::store');
 

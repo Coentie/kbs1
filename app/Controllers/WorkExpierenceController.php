@@ -3,9 +3,8 @@
 
 namespace KBS\Controllers;
 
-
-use KBS\Entities\WorkExpierence;
 use KBS\Request\Errors\Error;
+use KBS\Entities\WorkExpierence;
 use KBS\Request\Validator\Validator;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -14,19 +13,27 @@ class WorkExpierenceController extends BaseController
 {
 
     /**
-     * Index page for work expierence
+     * Returns the index page.
      *
      * @param \Psr\Http\Message\RequestInterface  $request
      * @param \Psr\Http\Message\ResponseInterface $response
      *
      * @return mixed
+     * @throws \ReflectionException
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
     public function index(RequestInterface $request, ResponseInterface $response)
     {
-        return $this->view->render($response, 'workexpierence/index.twig');
+        $workExpierences = (new WorkExpierence())
+                                    ->select()
+                                    ->orderBy('begin_year', 'ASC')
+                                    ->get();
+
+        return $this->view->render($response, 'workexpierence/index.twig', [
+            'workExpierences' => $workExpierences,
+        ]);
     }
 
     /**
@@ -45,14 +52,7 @@ class WorkExpierenceController extends BaseController
     {
         $this->authenticate();
 
-        $workExpierences = (new WorkExpierence())
-            ->select()
-            ->orderBy('begin_year', 'ASC')
-            ->get();
-
-        return $this->view->render($response, 'workexpierence/create.twig', [
-            'workexpierences' => $workExpierences,
-        ]);
+        return $this->view->render($response, 'workexpierence/create.twig');
     }
 
     /**
