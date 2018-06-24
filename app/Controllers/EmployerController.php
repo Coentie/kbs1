@@ -5,6 +5,8 @@ namespace KBS\Controllers;
 
 
 use KBS\Entities\Employer;
+use KBS\Request\Errors\Error;
+use KBS\Request\Validator\Validator;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -58,5 +60,47 @@ class EmployerController extends BaseController
                                                  ])));
 
         return $response;
+    }
+
+    /**
+     * Stores a new employer into the database.
+     *
+     * @param \Psr\Http\Message\RequestInterface  $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return mixed
+     * @throws \ReflectionException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function store(RequestInterface $request, ResponseInterface $response)
+    {
+        $this->authenticate();
+
+        $validator = (new Validator($request))->setRules([
+                                                             'name'      => 'required|max:255',
+                                                             'office_location'   => 'required|max:255',
+                                                         ])
+                                              ->validate();
+        if ( ! $validator->validationPassed())
+        {
+            return $this->view->render($response, 'employer/index.twig', [
+                'errorName'       => Error::has('title') ? Error::get('title') : null,
+                'errorOfficeLocation' => Error::has('errorDescription') ? Error::get('errorDescription') : null,
+            ]);
+        }
+
+        (new Employer())->insert([
+                                           'name'        => $request->getParsedBody()['name'],
+                                           'office_location' => $request->getParsedBody()['office_location'],
+                                           'website' => $request->getParsedBody()['website'],
+                                       ]);
+
+        Error::clear();
+
+        return $this->view->render($response, 'workexpierence/index.twig', [
+            'success' => 'Succesvol uw werkervaring opgeslagen!',
+        ]);
     }
 }
