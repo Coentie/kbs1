@@ -3,6 +3,7 @@
 
 namespace KBS\Controllers;
 
+use KBS\Entities\Employer;
 use KBS\Request\Errors\Error;
 use KBS\Entities\WorkExpierence;
 use KBS\Request\Validator\Validator;
@@ -52,7 +53,13 @@ class WorkExpierenceController extends BaseController
     {
         $this->authenticate();
 
-        return $this->view->render($response, 'workexpierence/create.twig');
+        $employers = (new Employer())
+                        ->select()
+                        ->get();
+
+        return $this->view->render($response, 'workexpierence/create.twig', [
+            'employers' => $employers,
+        ]);
     }
 
     /**

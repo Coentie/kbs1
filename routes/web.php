@@ -17,6 +17,10 @@ $route->post('/workexpierence/delete', '\KBS\Controllers\WorkExpierenceControlle
 $route->get('/workexpierence/edit', '\KBS\Controllers\WorkExpierenceController::create');
 $route->post('/workexpierence/edit', '\KBS\Controllers\WorkExpierenceController::store');
 
+/** Employer routes */
+$route->get('/employer', '\KBS\Controllers\EmployerController::index');
+$route->post('/employer/delete', '\KBS\Controllers\EmployerController::delete');
+
 /** Hobby routes */
 $route->get('/hobby', '\KBS\Controllers\HobbyController::index');
 $route->get('/hobby/edit', '\KBS\Controllers\HobbyController::create');

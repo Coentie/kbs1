@@ -1,0 +1,54 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+
+    <div class="flex flex-row">
+
+        {% include 'layouts/partials/side-navigation.twig' %}
+
+        <div class="flex flex-1 flex-col">
+            <h3 class="text-red-dark mb-8"> Werkgever beheer</h3>
+
+            <table class="text-left w-full">
+                <thead class="bg-white flex text-red-dark w-full">
+                    <tr class="flex w-full mb-4">
+                        <th class="p-2 w-1/4">Naam</th>
+                        <th class="p-2 w-1/4">Plaats</th>
+                        <th class="p-2 w-1/4">Website</th>
+                        <th class="p-2 w-1/4">Verwijder</th>
+                    </tr>
+                </thead>
+                <tbody class="flex flex-col items-center justify-between w-full">
+                    {% for employer in employers %}
+                        <tr class="flex w-full mb-4" id="row_{{ employer.id }}">
+                            <td class="p-2 w-1/4">{{ employer.name }}</td>
+                            <td class="p-2 w-1/4">{{ employer.office_location }}</td>
+                            <td class="p-2 w-1/4">{{ employer.website }}</td>
+                            <td class="p-2 w-1/4 text-red-dark">
+                                <i class="fa fa-times cursor-pointer" onclick="remove('{{ employer.id }}')"></i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+
+        let url = '/employer/delete?id=';
+
+        /**
+         * Removes the employer from the database
+         */
+        function remove(id)
+        {
+            axios.post(url + id).then(function(response) {
+                if(response.data.status === 'success') {
+                    fadeElement(document.getElementById('row_' +id).style);
+                }
+            });
+        }
+    </script>
+
+{% endblock %}
