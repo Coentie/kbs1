@@ -27,9 +27,9 @@ class WorkExpierenceController extends BaseController
     public function index(RequestInterface $request, ResponseInterface $response)
     {
         $workExpierences = (new WorkExpierence())
-                                    ->select()
-                                    ->orderBy('begin_year', 'ASC')
-                                    ->get();
+            ->select()
+            ->orderBy('begin_year', 'ASC')
+            ->get();
 
         return $this->view->render($response, 'workexpierence/index.twig', [
             'workExpierences' => $workExpierences,
@@ -99,8 +99,32 @@ class WorkExpierenceController extends BaseController
 
         Error::clear();
 
-        return $this->view->render($response, 'workexpirence/index.twig', [
+        return $this->view->render($response, 'workexpierence/index.twig', [
             'success' => 'Succesvol uw werkervaring opgeslagen!',
         ]);
+    }
+
+    /**
+     * Deletes a workexpierence.
+     *
+     * @param \Psr\Http\Message\RequestInterface  $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return string
+     * @throws \ReflectionException
+     */
+    public function delete(RequestInterface $request, ResponseInterface $response)
+    {
+        $this->authenticate();
+
+        (new WorkExpierence())->delete()
+                              ->where('id', '=', $request->getQueryParams()['id'])
+                              ->get();
+
+        $response->getBody()->write((json_encode([
+                                                            'status' => 'success'
+                                                        ])));
+
+        return $response;
     }
 }

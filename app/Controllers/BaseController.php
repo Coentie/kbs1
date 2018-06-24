@@ -4,7 +4,8 @@
 namespace KBS\Controllers;
 
 use KBS\View\View;
-use KBS\Request\Errors\Error;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class BaseController
 {

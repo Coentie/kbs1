@@ -9,7 +9,7 @@
         <div class="flex flex-1 flex-col items-center">
 
             {% for expierence in workExpierences %}
-                <div class="lg:flex prefixed-height-200 mb-4 -ml-8">
+                <div class="lg:flex prefixed-height-200 mb-4 -ml-8" id="work-id-{{ expierence.id }}">
                     <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
                          style="background-image: url('https://tailwindcss.com/img/card-left.jpg')"
                          title="Woman holding a mug">
@@ -21,7 +21,8 @@
                                     {{ expierence.name }}
                                 </div>
                                 {% if(signedIn) %}
-                                    <small><i class="fa fa-times cursor-pointer"></i></small>
+                                    <small><i class="fa fa-times cursor-pointer"
+                                              onclick="remove('{{ expierence.id }}')"></i></small>
                                 {% endif %}
 
                             </div>
@@ -39,5 +40,24 @@
 
         </div>
     </div>
+
+    <script >
+        let
+            url = '/workexpierence/delete?id=';
+
+        /**
+         * Removes a work expierence.
+         *
+         * @param name
+         */
+        function remove(id) {
+            axios.post(url + id).then(function (response) {
+                if(response.data.status === 'success') {
+                    fadeElement(document.getElementById('work-id-' +id).style);
+                }
+            });
+        }
+
+    </script>
 
 {% endblock %}

@@ -6,6 +6,7 @@ use KBS\Query\Builder;
 
 class Entity
 {
+
     /**
      * Table of the entity.
      *
@@ -33,6 +34,11 @@ class Entity
     protected $casts = [];
 
     /**
+     * @var array
+     */
+    protected $entityArray = [];
+
+    /**
      * Creates the base for a select query.
      *
      * @param array $selected
@@ -57,9 +63,23 @@ class Entity
     public function insert(array $insertable)
     {
         $this->builder = (new Builder($this))
-                ->insert($insertable)
-                ->get()
-                ->execute();
+            ->insert($insertable)
+            ->get()
+            ->execute();
+
+        return $this;
+    }
+
+    /**
+     * Sets the builder to a delete query.
+     *
+     * @return $this
+     * @throws \ReflectionException
+     */
+    public function delete()
+    {
+        $this->builder = (new Builder($this))
+            ->delete();
 
         return $this;
     }
@@ -114,19 +134,12 @@ class Entity
     {
         $result = $this->fetchQuery();
 
-        if(count($result) == 1) {
-            array_walk($result, [$this, 'bindKeysToEntity']);
+        foreach ($result as $row)
+        {
+            $this->entityArray[] = $this->newInstanceAndBind($row);
         }
 
-        if(count($result) > 1) {
-            foreach($result as $row) {
-                $entityArray[] = $this->newInstanceAndBind($row);
-            }
-
-            return $entityArray;
-        }
-
-        return $this;
+        return $this->entityArray;
     }
 
     /**
@@ -136,7 +149,7 @@ class Entity
     {
         $this->builder = $this->builder->limit(1);
 
-        return $this->get();
+        return $this->get()[0];
     }
 
     /**
@@ -156,20 +169,8 @@ class Entity
     protected function executeQuery()
     {
         $this->builder->get()->execute();
-        return $this->builder->get();
-    }
 
-    /**
-     * Binds retreived keys to the object.
-     *
-     * @param $result
-     */
-    protected function bindKeysToEntity($result)
-    {
-        foreach($result as $attribute => $value)
-        {
-            $this->$attribute = $value;
-        }
+        return $this->builder->get();
     }
 
     /**
@@ -183,7 +184,7 @@ class Entity
     {
         $model = new $this;
 
-        foreach($result as $col => $value)
+        foreach ($result as $col => $value)
         {
             $model->$col = $value;
         }

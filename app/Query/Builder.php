@@ -71,6 +71,11 @@ class Builder
     protected $orderBy;
 
     /**
+     * @var string
+     */
+    protected $delete;
+
+    /**
      * Builder constructor.
      *
      * @param \PDO|null            $connection
@@ -145,6 +150,18 @@ class Builder
             ') VALUES (' .
             $this->getBindingString($array)
             . ')';
+
+        return $this;
+    }
+
+    /**
+     * Sets up the base for a delete statement.
+     */
+    public function delete()
+    {
+        $this->setQuerySort('delete');
+
+        $this->delete = 'DELETE FROM ' . $this->table;
 
         return $this;
     }
@@ -317,6 +334,10 @@ class Builder
                 break;
             case 'insert':
                 $this->query = $this->insert;
+                break;
+            case 'delete':
+                $this->query = $this->delete .
+                        $this->whereStatement;
                 break;
         }
 

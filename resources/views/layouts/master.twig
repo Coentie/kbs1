@@ -23,7 +23,7 @@
     </div>
 
 
-
+    <script src="/js/app.js"></script>
     <script>
 
         /**
@@ -43,5 +43,12 @@
             document.getElementById('logout-form').submit();
         }
 
+        function fadeElement(element){
+            (element.opacity-=.1) < 0 ? element.display= "none" :setTimeout(fadeElement,40);
+        }
+
     </script>
+
+    {% block javascript %}{% endblock %}
+
 </body>
