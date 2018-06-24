@@ -30,10 +30,10 @@ class EmployerController extends BaseController
         $this->authenticate();
 
         $employers = (new Employer())
-                        ->select()
-                        ->get();
+            ->select()
+            ->get();
 
-        return $this->view->render($response,'employer/index.twig', [
+        return $this->view->render($response, 'employer/index.twig', [
             'employers' => $employers
         ]);
     }
@@ -52,8 +52,8 @@ class EmployerController extends BaseController
         $this->authenticate();
 
         (new Employer())->delete()
-                              ->where('id', '=', $request->getQueryParams()['id'])
-                              ->get();
+                        ->where('id', '=', $request->getQueryParams()['id'])
+                        ->get();
 
         $response->getBody()->write((json_encode([
                                                      'status' => 'success'
@@ -79,23 +79,23 @@ class EmployerController extends BaseController
         $this->authenticate();
 
         $validator = (new Validator($request))->setRules([
-                                                             'name'      => 'required|max:255',
-                                                             'office_location'   => 'required|max:255',
+                                                             'name'            => 'required|max:255',
+                                                             'office_location' => 'required|max:255',
                                                          ])
                                               ->validate();
         if ( ! $validator->validationPassed())
         {
             return $this->view->render($response, 'employer/index.twig', [
-                'errorName'       => Error::has('title') ? Error::get('title') : null,
-                'errorOfficeLocation' => Error::has('errorDescription') ? Error::get('errorDescription') : null,
+                'errorName'           => Error::has('name') ? Error::get('name') : null,
+                'errorOfficeLocation' => Error::has('office_location') ? Error::get('office_location') : null,
             ]);
         }
 
         (new Employer())->insert([
-                                           'name'        => $request->getParsedBody()['name'],
-                                           'office_location' => $request->getParsedBody()['office_location'],
-                                           'website' => $request->getParsedBody()['website'],
-                                       ]);
+                                     'name'            => $request->getParsedBody()['name'],
+                                     'office_location' => $request->getParsedBody()['office_location'],
+                                     'website'         => $request->getParsedBody()['website'],
+                                 ]);
 
         Error::clear();
 

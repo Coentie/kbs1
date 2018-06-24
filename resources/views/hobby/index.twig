@@ -3,8 +3,57 @@
 {% block content %}
     <div class="flex flex-row">
 
-    {% include 'layouts/partials/side-navigation.twig' %}
+        {% include 'layouts/partials/side-navigation.twig' %}
 
+        <div class="flex flex-1 flex-col items-center">
+
+            <h3 class="text-red-dark mb-8"> Mijn hobbies </h3>
+
+            {% for hobby in hobbies %}
+                <div class="lg:flex prefixed-height-200 mb-4 -ml-8" id="hobby-id-{{ hobby.id }}">
+                    <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+                         style="background-image: url('https://tailwindcss.com/img/card-left.jpg')"
+                         title="Woman holding a mug">
+                    </div>
+                    <div class="prefixed-width-400 border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+                        <div class="mb-8">
+                            <div class="flex text-red-dark font-bold text-xl mb-2">
+                                <div class="flex-1">
+                                    {{ hobby.name }}
+                                </div>
+                                {% if(signedIn) %}
+                                    <small><i class="fa fa-times cursor-pointer"
+                                              onclick="remove('{{ hobby.id }}')"></i></small>
+                                {% endif %}
+
+                            </div>
+                            <p class="text-grey-darker text-base flex-wrap">{{ hobby.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
+
+    <script>
+
+        /** Url **/
+        let url = '/hobby/delete?id=';
+
+        /**
+         * Removes a hobby from the database.
+         *
+         * @param id
+         */
+        function remove(id)
+        {
+            axios.post(url + id).then(function (response) {
+                if(response.data.status === 'success') {
+                    fadeElement(document.getElementById('hobby-id-' +id).style);
+                }
+            });
+        }
+    </script>
+
 
 {% endblock %}

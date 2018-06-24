@@ -24,6 +24,7 @@ $route->post('/employer/delete', '\KBS\Controllers\EmployerController::delete');
 
 /** Hobby routes */
 $route->get('/hobby', '\KBS\Controllers\HobbyController::index');
+$route->post('/hobby/delete', '\KBS\Controllers\HobbyController::delete');
 $route->get('/hobby/edit', '\KBS\Controllers\HobbyController::create');
 $route->post('/hobby/edit', '\KBS\Controllers\HobbyController::store');
 
