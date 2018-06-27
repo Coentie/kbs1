@@ -1,5 +1,22 @@
 <?php
 
+use Zend\Diactoros\Response\RedirectResponse;
+
+if ( ! function_exists('redirect'))
+{
+    /**
+     * Redirect the user.
+     *
+     * @param $path
+     *
+     * @return \Zend\Diactoros\Response\RedirectResponse
+     */
+    function redirect($path)
+    {
+        return new RedirectResponse($path);
+    }
+}
+
 /*
  * Path helpers
  */
@@ -94,7 +111,8 @@ if ( ! function_exists('env'))
     }
 }
 
-if( ! function_exists('session')) {
+if ( ! function_exists('session'))
+{
 
     /**
      * Stores a value to the session.
@@ -141,13 +159,14 @@ if ( ! function_exists('config'))
 
         return [
             new \KBS\Config\Loader\ArrayLoader([
-                                                   $filename=> config_path($filename . '.php'),
+                                                   $filename => config_path($filename . '.php'),
                                                ])
         ];
     }
 }
 
-if(! function_exists('signedIn')) {
+if ( ! function_exists('signedIn'))
+{
 
     /**
      * Checks if a user is signed in.
@@ -159,3 +178,4 @@ if(! function_exists('signedIn')) {
         return array_key_exists('username', $_SESSION);
     }
 }
+

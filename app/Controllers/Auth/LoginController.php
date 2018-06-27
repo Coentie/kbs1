@@ -44,7 +44,8 @@ class LoginController extends BaseController
     {
         if($this->signIn($request)) {
             Error::clear();
-            return $this->view->render($response, 'admin/dashboard.twig');
+
+            return redirect('contact');
         }
 
         return $this->view->render($response, 'auth/login.twig', [

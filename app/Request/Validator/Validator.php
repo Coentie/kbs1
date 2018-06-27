@@ -131,10 +131,31 @@ class Validator
         }
     }
 
+    /**
+     * Checks the size of a post.
+     *
+     * @param $post
+     * @param $size
+     */
     protected function max($post, $size)
     {
         if(strlen($post) > $size) {
             Error::add($post, $post . ' mag niet meer dan ' . $size . ' karakters lang zijn');
+
+            $this->validationFailed();
+        }
+    }
+
+    /**
+     * Checks if a value is less then an other value.
+     *
+     * @param $post
+     * @param $otherValue
+     */
+    protected function lessthen($post, $otherValue)
+    {
+        if(! $post < $this->request->getParsedBody()[$otherValue]) {
+            Error::add($post, $post . ' mag niet groter zijn dan '. $otherValue);
 
             $this->validationFailed();
         }

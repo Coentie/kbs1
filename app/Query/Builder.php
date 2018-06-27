@@ -36,6 +36,11 @@ class Builder
     protected $insert;
 
     /**
+     * @var string
+     */
+    protected $join = '';
+
+    /**
      * @var array
      */
     protected $bindings = [];
@@ -133,6 +138,42 @@ class Builder
     }
 
     /**
+     * Left joins another table.
+     *
+     * @param $joiningTable
+     * @param $columnToJoinOriginal
+     * @param $operator
+     * @param $columnToJoinJoiner
+     */
+    public function leftjoin($joiningTable, $columnToJoinOriginal, $operator, $columnToJoinJoiner)
+    {
+        $this->join .= ' LEFT JOIN ' .
+            $joiningTable .
+            ' ON ' .
+            $this->validateTableInput($columnToJoinOriginal) .
+            $operator .
+            $columnToJoinJoiner;
+
+        return $this;
+    }
+
+    /**
+     * Validates if the user specfied a table dot seperator, if not add it with the entities table.
+     *
+     * @param $column
+     *
+     * @return string
+     */
+    protected function validateTableInput($column)
+    {
+        if(strpos($column, '.')) {
+            return $column;
+        }
+
+        return $this->table . '.' . $column;
+    }
+
+    /**
      * Creates the base for the insert query.
      *
      * @param array $array
@@ -188,12 +229,12 @@ class Builder
     protected function getBindingString($array)
     {
         $appendable = '';
-
+        $keys = array_keys($array);
         foreach ($array as $col => $binding)
         {
             $appendable .= ':' . $col;
 
-            if ($binding !== end($array))
+            if ($col !== end($keys))
             {
                 $appendable .= ',';
             }
@@ -328,6 +369,7 @@ class Builder
         {
             case 'select':
                 $this->query = $this->select
+                    . $this->join
                     . $this->whereStatement
                     . $this->orderBy
                     . $this->limit;
@@ -337,7 +379,7 @@ class Builder
                 break;
             case 'delete':
                 $this->query = $this->delete .
-                        $this->whereStatement;
+                    $this->whereStatement;
                 break;
         }
 
@@ -397,6 +439,6 @@ class Builder
      */
     protected function arrayToSql(array $values)
     {
-        return implode("', '", $values);
+        return implode(", ", $values);
     }
 }

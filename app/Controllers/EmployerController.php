@@ -99,8 +99,6 @@ class EmployerController extends BaseController
 
         Error::clear();
 
-        return $this->view->render($response, 'workexpierence/index.twig', [
-            'success' => 'Succesvol uw werkervaring opgeslagen!',
-        ]);
+        return redirect('employer');
     }
 }

@@ -55,6 +55,23 @@ class Entity
     }
 
     /**
+     * left joins a table.
+     *
+     * @param $joiningTable
+     * @param $columnToJoinOriginal
+     * @param $operator
+     * @param $columnToJoinJoiner
+     *
+     * @return $this
+     */
+    public function leftjoin($joiningTable, $columnToJoinOriginal, $operator, $columnToJoinJoiner)
+    {
+        $this->builder->leftjoin($joiningTable, $columnToJoinOriginal, $operator, $columnToJoinJoiner);
+
+        return $this;
+    }
+
+    /**
      * Creates the base fo an insert query.
      *
      * @return $this

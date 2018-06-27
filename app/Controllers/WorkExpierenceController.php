@@ -28,7 +28,8 @@ class WorkExpierenceController extends BaseController
     public function index(RequestInterface $request, ResponseInterface $response)
     {
         $workExpierences = (new WorkExpierence())
-            ->select()
+            ->select(['workexpierence.*', 'employer.name as employer_name', 'employer.office_location', 'employer.website'])
+            ->leftjoin('employer', 'employer_id', '=', 'employer.id')
             ->orderBy('begin_year', 'ASC')
             ->get();
 
@@ -81,18 +82,19 @@ class WorkExpierenceController extends BaseController
         $validator = (new Validator($request))->setRules([
                                                              'title'      => 'required|max:255',
                                                              'employer'   => 'required',
-                                                             'begin_year' => 'required',
+                                                             'begin_year' => 'required|lessthen:end_year',
                                                              'end_year'   => 'required',
                                                          ])
                                               ->validate();
         if ( ! $validator->validationPassed())
         {
+
             return $this->view->render($response, 'workexpierence/create.twig', [
                 'errorTitle'       => Error::has('title') ? Error::get('title') : null,
                 'errorDescription' => Error::has('errorDescription') ? Error::get('errorDescription') : null,
                 'errorEmployer'    => Error::has('employer') ? Error::get('employer') : null,
-                'errorBegindate'   => Error::has('begin_date') ? Error::get('begin_date') : null,
-                'errorEnddate'     => Error::has('end_date') ? Error::get('end_date') : null,
+                'errorBegindate'   => Error::has('begin_year') ? Error::get('begin_year') : null,
+                'errorEnddate'     => Error::has('end_year') ? Error::get('end_year') : null,
             ]);
         }
 
@@ -106,9 +108,7 @@ class WorkExpierenceController extends BaseController
 
         Error::clear();
 
-        return $this->view->render($response, 'workexpierence/index.twig', [
-            'success' => 'Succesvol uw werkervaring opgeslagen!',
-        ]);
+        return redirect('workexpierence');
     }
 
     /**

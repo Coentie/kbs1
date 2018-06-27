@@ -30,6 +30,15 @@
                             </div>
                             <p class="text-grey-darker text-base">{{ expierence.description }}</p>
                         </div>
+                        <div class="flex items-center mb-8">
+                            <div class="text-sm">
+                                <p class="text-black leading-none">Werkgever naam: {{ expierence.employer_name }}</p>
+                                <p class="text-grey-dark">Werkgever locatie: {{ expierence.office_location }}</p>
+                                {% if(expierence.website) %}
+                                <a href="{{ expierence.website }}">Site: {{ expierence.office_location }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
                         <div class="flex items-center">
                             <div class="text-sm">
                                 <p class="text-black leading-none">Begonnen: {{ expierence.begin_year }}</p>

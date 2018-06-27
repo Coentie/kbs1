@@ -110,8 +110,6 @@ class HobbyController extends BaseController
 
         Error::clear();
 
-        return $this->view->render($response, 'hobby/index.twig', [
-            'success' => 'Succesvol uw hobby opgeslagen!',
-        ]);
+        return redirect('hobby');
     }
 }
