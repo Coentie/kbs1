@@ -1,0 +1,159 @@
+{% extends 'layouts/master.twig' %}
+
+{% block content %}
+
+    <div class="flex flex-row">
+
+        {% include 'layouts/partials/side-navigation.twig' %}
+
+        <div class="flex flex-col flex-1">
+
+            <h3 class="text-red-dark mb-8"> Update contact gegevens.</h3>
+
+            <form method="POST">
+
+                <div class="flex flex-col mb-8">
+                    <div class="md:w-1/6">
+                        <label class="block text-grey mb-1 md:mb-0 pr-4" for="street">
+                            Straat
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               type="text" name="straat" id="straat" value="{{ contact.straat }}">
+                    </div>
+
+                    {% if(errorStraat) %}
+                        <div class="md:flex mb-6">
+                            <div class="md:m-1/6"></div>
+                            <div class='md:w-2/3 block text-red'>
+                                {{ errorStraat }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex flex-col mb-8">
+                    <div class="md:w-1/6">
+                        <label class="block text-grey mb-1 md:mb-0 pr-4" for="huis_nummer">
+                            Huisnummer
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               type="text" name="huis_nummer" id="huis_nummer" value="{{ contact.huis_nummer }}">
+                    </div>
+
+                    {% if(errorHuisnummer) %}
+                        <div class="md:flex mb-6">
+                            <div class="md:m-1/6"></div>
+                            <div class='md:w-2/3 block text-red'>
+                                {{ errorHuisnummer }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+
+
+                <div class="flex flex-col mb-8">
+                    <div class="md:w-1/6">
+                        <label class="block text-grey mb-1 md:mb-0 pr-4" for="postcode">
+                            Postcode
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                    <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                              type="text" name="postcode" id="postcode" value="{{ contact.postcode }}">
+                    </div>
+
+                    {% if(errorPostcode) %}
+                        <div class="md:flex mb-6">
+                            <div class="md:m-1/6"></div>
+                            <div class='md:w-2/3 block text-red'>
+                                {{ errorPostcode }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex flex-col mb-8">
+                    <div class="md:w-1/6">
+                        <label class="block text-grey mb-1 md:mb-0 pr-4" for="woonplaats">
+                            Woonplaats
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               type="text" name="stad" id="stad" value="{{ contact.stad }}">
+                    </div>
+
+                    {% if(errorStad) %}
+                        <div class="md:flex mb-6">
+                            <div class="md:m-1/6"></div>
+                            <div class='md:w-2/3 block text-red'>
+                                {{ errorStad }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex flex-col mb-3">
+                    <div class="md:w-1/6">
+                        <label class="block text-grey mb-1 md:mb-0 pr-4" for="telefoon">
+                            Telefoon
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               type="text" name="telefoon" id="telefoon" value="{{ contact.telefoon }}">
+                    </div>
+
+                    {% if(errorTelefoon) %}
+                        <div class="md:flex mb-4">
+                            <div class="md:m-1/6"></div>
+                            <div class='md:w-2/3 block text-red'>
+                                {{ errorTelefoon }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex flex-col mb-2">
+                    <div class="md:w-1/6">
+                        <label class="block text-grey mb-1 md:mb-0 pr-4" for="email">
+                           Email
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input class="bg-grey-lighter appearance-none border-2 border-grey-lighter hover:red-purple rounded w-full py-2 px-4 text-grey-darker leading-tight"
+                               type="email" name="email" id="email" value="{{  contact.email }}">
+                    </div>
+
+                    {% if(errorEmail) %}
+                        <div class="md:flex mb-2">
+                            <div class="md:m-1/6"></div>
+                            <div class='md:w-2/3 block text-red'>
+                                {{ errorEmail }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="md:w-1/6">
+                    </div>
+                    <div class="md:w-2/3">
+                        <button class="shadow bg-red-dark hover:bg-red-light text-white font-bold py-2 px-4 rounded"
+                                type="submit">
+                            <i class="fa fa-check mr-2"></i> Update
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+{% endblock %}

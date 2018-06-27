@@ -180,11 +180,12 @@ class Builder
      *
      * @return $this
      */
-    public function insert(array $array)
+    public function insert(array $array, $sort = 'insert')
     {
         $this->setQuerySort('insert');
 
-        $this->insert = 'INSERT INTO ' .
+        $this->insert = $this->getInsertQueryType($sort)
+            . ' INTO ' .
             $this->table .
             '(' .
             $this->extractColumns($array) .
@@ -193,6 +194,23 @@ class Builder
             . ')';
 
         return $this;
+    }
+
+    /**
+     * Returns the insert query type.
+     *
+     * @param $sort
+     *
+     * @return string
+     */
+    protected function getInsertQueryType($sort)
+    {
+        switch($sort) {
+            case 'insert':
+                return 'INSERT';
+            case 'replace':
+                return 'REPLACE';
+            }
     }
 
     /**

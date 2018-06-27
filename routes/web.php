@@ -5,11 +5,15 @@ $route->get('', '\KBS\Controllers\HomeController::index')->setName('home');
 
 /** Contact routes */
 $route->get('/contact', '\KBS\Controllers\ContactController::index')->setName('contact');
+$route->get('/contact/edit', '\KBS\Controllers\ContactController::edit')->setName('contact.edit');
+$route->post('/contact/edit', '\KBS\Controllers\ContactController::update')->setName('contact.update');
 
 /** Authentication routes */
 $route->get('/login', '\KBS\Controllers\Auth\LoginController::index')->setName('login');
 $route->post('/login', '\KBS\Controllers\Auth\LoginController::login');
 $route->post('/logout', '\KBS\Controllers\Auth\LoginController::logout');
+
+
 
 /** Workexpierence routes */
 $route->get('/workexpierence', '\KBS\Controllers\WorkExpierenceController::index');

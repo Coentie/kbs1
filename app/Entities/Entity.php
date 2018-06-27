@@ -77,10 +77,10 @@ class Entity
      * @return $this
      * @throws \ReflectionException
      */
-    public function insert(array $insertable)
+    public function insert(array $insertable, $sort = 'insert')
     {
         $this->builder = (new Builder($this))
-            ->insert($insertable)
+            ->insert($insertable, $sort)
             ->get()
             ->execute();
 
