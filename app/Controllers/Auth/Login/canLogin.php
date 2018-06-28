@@ -32,8 +32,7 @@ trait canLogin
         $this->setUser($request)
              ->userFound() ? $this->passwordMatch($request) : Error::add('username', 'Username not found.');
 
-        $this->loggedIn ?
-            $this->saveToSession() : null;
+        if($this->loggedIn) $this->saveToSession();
 
         return $this->loggedIn;
     }
@@ -55,7 +54,9 @@ trait canLogin
      */
     private function setUser($request)
     {
-        $this->user = (new User())->getUserWithName($request->getParsedBody()['username']);
+        $this->user = (new User())
+            ->withProtected()
+            ->getUserWithName($request->getParsedBody()['username']);
 
         return $this;
     }
@@ -67,7 +68,7 @@ trait canLogin
      */
     private function userFound()
     {
-        if(! property_exists($this->user, 'name'))
+        if(!$this->user || ! property_exists($this->user, 'name'))
         {
             $this->loginFailed();
         }

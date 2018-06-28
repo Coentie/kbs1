@@ -152,9 +152,9 @@ class Validator
      * @param $post
      * @param $otherValue
      */
-    protected function lessthen($post, $otherValue)
+    protected function lessthendate($post, $otherValue)
     {
-        if(! $post < $this->request->getParsedBody()[$otherValue]) {
+        if(strtotime($post) < strtotime($this->request->getParsedBody()[$otherValue])) {
             Error::add($post, $post . ' mag niet groter zijn dan '. $otherValue);
 
             $this->validationFailed();

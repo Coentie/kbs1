@@ -39,6 +39,11 @@ class Entity
     protected $entityArray = [];
 
     /**
+     * @var array
+     */
+    protected $protected = [];
+
+    /**
      * Creates the base for a select query.
      *
      * @param array $selected
@@ -166,7 +171,9 @@ class Entity
     {
         $this->builder = $this->builder->limit(1);
 
-        return $this->get()[0];
+        $result = $this->get();
+
+        return count($result) > 0 ? $result[0] : null;
     }
 
     /**
@@ -203,9 +210,25 @@ class Entity
 
         foreach ($result as $col => $value)
         {
-            $model->$col = $value;
+            if(! in_array($col, $this->protected)) {
+                $model->$col = $value;
+            }
         }
 
         return $model;
+    }
+
+    /**
+     * remove keys from the protected array to include them into the model one time.
+     *
+     * @param mixed ...$keys
+     *
+     * @return $this
+     */
+    public function withProtected()
+    {
+        $this->protected = [];
+
+        return $this;
     }
 }

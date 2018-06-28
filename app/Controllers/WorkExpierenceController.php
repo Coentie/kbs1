@@ -28,7 +28,12 @@ class WorkExpierenceController extends BaseController
     public function index(RequestInterface $request, ResponseInterface $response)
     {
         $workExpierences = (new WorkExpierence())
-            ->select(['workexpierence.*', 'employer.name as employer_name', 'employer.office_location', 'employer.website'])
+            ->select([
+                         'workexpierence.*',
+                         'employer.name as employer_name',
+                         'employer.office_location',
+                         'employer.website'
+                     ])
             ->leftjoin('employer', 'employer_id', '=', 'employer.id')
             ->orderBy('begin_year', 'ASC')
             ->get();
@@ -54,12 +59,8 @@ class WorkExpierenceController extends BaseController
     {
         $this->authenticate();
 
-        $employers = (new Employer())
-                        ->select()
-                        ->get();
-
         return $this->view->render($response, 'workexpierence/create.twig', [
-            'employers' => $employers,
+            'employers' => $this->getEmployers(),
         ]);
     }
 
@@ -82,7 +83,7 @@ class WorkExpierenceController extends BaseController
         $validator = (new Validator($request))->setRules([
                                                              'title'      => 'required|max:255',
                                                              'employer'   => 'required',
-                                                             'begin_year' => 'required|lessthen:end_year',
+                                                             'begin_year' => 'required|lessthendate:end_year',
                                                              'end_year'   => 'required',
                                                          ])
                                               ->validate();
@@ -90,6 +91,7 @@ class WorkExpierenceController extends BaseController
         {
 
             return $this->view->render($response, 'workexpierence/create.twig', [
+                'employers'        => $this->getEmployers(),
                 'errorTitle'       => Error::has('title') ? Error::get('title') : null,
                 'errorDescription' => Error::has('errorDescription') ? Error::get('errorDescription') : null,
                 'errorEmployer'    => Error::has('employer') ? Error::get('employer') : null,
@@ -100,15 +102,15 @@ class WorkExpierenceController extends BaseController
 
         (new WorkExpierence())->insert([
                                            'name'        => $request->getParsedBody()['title'],
-                                           'employee_id' => $request->getParsedBody()['employer'],
+                                           'employer_id' => $request->getParsedBody()['employer'],
                                            'description' => $request->getParsedBody()['description'],
-                                           'begin_year'  => $request->getParsedBody()['begin_year'],
+                                            'begin_year'  => $request->getParsedBody()['begin_year'],
                                            'end_year'    => $request->getParsedBody()['end_year'],
                                        ]);
 
         Error::clear();
 
-        return redirect('workexpierence');
+        return redirect('/workexpierence');
     }
 
     /**
@@ -129,9 +131,22 @@ class WorkExpierenceController extends BaseController
                               ->get();
 
         $response->getBody()->write((json_encode([
-                                                            'status' => 'success'
-                                                        ])));
+                                                     'status' => 'success'
+                                                 ])));
 
         return $response;
+    }
+
+    /**
+     * Gets the employers.
+     *
+     * @return $this|array
+     * @throws \ReflectionException
+     */
+    protected function getEmployers()
+    {
+        return (new Employer())
+            ->select()
+            ->get();
     }
 }
